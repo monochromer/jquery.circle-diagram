@@ -1,54 +1,13 @@
-/*
-
-jQuery-плагин для построения круговых диаграмм
-
-Вызов:
-
-в html создается разметка
-<div data-percent="15.2%"></div>
-
-здесь указывается data-атрибут data-percent с данными,
-которые затем будут отображены на диаграмме.
-
-$(jQuery Selector).diagram({ 
-	size: "200",
-	borderWidth: "20",
-	bgFill: "#95a5a6",
-	frFill: "#1abc9c",
-	textSize: 54,
-	textColor: '#2a2a2a'
-});
-
-параметры:
-size - размер диаграммы в px
-borderWidth - толщина обводки
-bgFill - цвет незаполненной части
-frFill - цвет заполненной части
-textSize - размер шрифта для надписи
-textColor - цвет шрифта для надписи
-font - семейство шрифтов (например, "'PT Sans', Arial, sans-serif")
-
-если не передать параметры, то будут установлены параметры по-умолчанию
-var defaults = {
-	size: "100",
-	borderWidth: "10",
-	bgFill: '#bbb',
-	frFill: '#0bf',
-	textSize: 50,
-	font: "serif",
-	textColor: '#000'
-};
-
-
-поддержка браузерами: IE9+
-
+/**
+ * jQuery-плагин для построения круговых диаграмм
+ * author: monochromer
+ * https://github.com/monochromer/jquery.circle-diagram
 */
-
 
 (function($) {
 
-	$.fn.diagram = function(params){
-	
+	$.fn.circleDiagram = function(params){
+
 		function rotate(angle) {
 			return {
 				"-webkit-transform": "rotate(" + angle + "deg)",
@@ -64,74 +23,75 @@ var defaults = {
 			borderWidth: "10",
 			bgFill: '#bbb',
 			frFill: '#0bf',
-			textSize: 50+'px',
-			font: "serif",
-			textColor: '#000'
+			textSize: 50 + 'px',
+			font: "inherit",
+			textColor: "#000"
 		};
 
-		var options = $.extend({}, defaults, params);
-
-		var $this = $(this);
-		var dataAttr = $this.data("percent");
-		var data = parseFloat(dataAttr);
+		var $this = this;
+		var dataAttr = $.parseJSON($this.attr("data-circle-diagram"));
+		var options = $.extend(true, {}, defaults, params, dataAttr);
+		
+		consoloe.log();
 
 		var cssMain = {
 			"position": "relative",
-			"width": options.size + "px",
-			"height": options.size + "px",
-			"border": options.borderWidth + "px " + "solid " + options.bgFill,
+			"width": parseFloat(options.size) + "px",
+			"height":  parseFloat(options.size) + "px",
+			"border": parseFloat(options.borderWidth) + "px" + " " + "solid" + " " + options.bgFill,
 			"border-radius": "50%",
 			"z-index": "1"
 		};
 
 		var cssElems = {
 			"position": "absolute",
-			"top": -options.borderWidth + "px",
-			"right": -options.borderWidth + "px",
-			"bottom": -options.borderWidth + "px",
-			"left": -options.borderWidth + "px",
-			"border": options.borderWidth + "px " + "solid",
+			"z-index": "1",
+			"top": -parseFloat(options.borderWidth) + "px",
+			"right": -parseFloat(options.borderWidth) + "px",
+			"bottom": -parseFloat(options.borderWidth) + "px",
+			"left": -parseFloat(options.borderWidth) + "px",
+			"border": parseFloat(options.borderWidth) + "px" + " " + "solid",
 			"border-radius": "50%"
 		};
 
 		$this.css(cssMain);
 		
 		var text = $('<span></span>')
-			.appendTo($this)
 			.css({
 				"display": "block",
 				"position": "relative",
 				"z-index": "2",
 				"text-align": "center",
-				"font-size": options.textSize,
+				"font-size": options.textSize + "px",
 				"font-family": options.font,
-				"height": options.size + "px",
-				"line-height": options.size + "px",
+				"height": parseFloat(options.size) + "px",
+				"line-height": parseFloat(options.size) + "px",
 				"color": options.textColor
 			})
-			.text(dataAttr);
-		
+			.text(options.percent)
+			.appendTo($this);
+
 		var bg = $('<div></div>')
-			.appendTo($this)
 			.css(cssElems)
 			.css({
 				"border-color": options.frFill,
 				"border-left-color": "transparent",
-				"border-bottom-color": "transparent",
-				"z-index": "1"
-			});
+				"border-bottom-color": "transparent"
+			})
+			.appendTo($this);
 
 		var fill = $('<div></div>')
-			.appendTo($this)
 			.css(cssElems)
-				.css({
+			.css({
 				"border-color": options.bgFill,
 				"border-left-color": "transparent",
-				"border-bottom-color": "transparent",
-				"z-index": "1"
-			});
+				"border-bottom-color": "transparent"
+			})
+			.appendTo($this);
 
 		var angle;
+		var data = parseFloat(options.percent);
+
 		if (data >= 0 && data <= 50) {
 			angle = (225 - 45)/50*data + 45;
 		} else {
@@ -140,14 +100,13 @@ var defaults = {
 				"border-color": options.frFill,
 				"border-left-color": "transparent",
 				"border-bottom-color": "transparent",
-				"z-index": "1"
 			});
-		}
-		
+		};
+
 		bg.css(rotate(45));
 		fill.css(rotate(angle));
 
-		return this;
+		return $this;
 	};
 
 })(jQuery);

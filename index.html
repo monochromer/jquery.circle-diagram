@@ -3,60 +3,29 @@
 <head>
 	<meta charset="utf-8">
 	<title>Круговые диаграммы</title>
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/jquery.diagram.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div id="diagram-id-1" class="diagram" data-percent="15.2%"></div>
-<div id="diagram-id-2" class="diagram" data-percent="32.65%"></div>
-<div id="diagram-id-3" class="diagram" data-percent="50%"></div>
-<div id="diagram-id-4" class="diagram" data-percent="85.34%"></div>
-<div id="diagram-id-5" class="diagram" data-percent="93.2%"></div>
+	<div
+		id="diagram-id-1"
+		class="diagram"
+		data-circle-diagram='{
+			"percent": "34.2%",
+			"size": "280",
+			"borderWidth": "4",
+			"bgFill": "#cacaca",
+			"frFill": "#80d03c",
+			"textSize": "56",
+			"textColor": "#585858"
+			}'>
+	</div>
 
-<script>
-	$(function() {
-		$('#diagram-id-1').diagram({ 
-			size: "200"
-		});
+	<div id="diagram-id-2" class="diagram"></div>
 
-		$('#diagram-id-2').diagram({ 
-			size: "200",
-			borderWidth: "10",
-			bgFill: "#95a5a6",
-			frFill: "#2ecc71",
-			textSize: 54,
-			textColor: '#333'
-		});
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/jquery.circle-diagram.js"></script>
+	<script src="js/main.js"></script>
 
-		$('#diagram-id-3').diagram({ 
-			size: "200",
-			borderWidth: "15",
-			bgFill: "#95a5a6",
-			frFill: "#3498db",
-			textSize: 54,
-			textColor: '#1a1a1a'
-		});
-
-		$('#diagram-id-4').diagram({ 
-			size: "200",
-			borderWidth: "25",
-			bgFill: "#95a5a6",
-			frFill: "#9b59b6",
-			textSize: 54,
-			textColor: '#545454'
-		});
-
-		$('#diagram-id-5').diagram({ 
-			size: "200",
-			borderWidth: "5",
-			bgFill: "#95a5a6",
-			frFill: "#e67e22",
-			textSize: 54,
-			textColor: '#3535aa'
-		});
-	})
-</script>
 </body>
 </html>
