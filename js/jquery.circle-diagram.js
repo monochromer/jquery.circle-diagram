@@ -9,6 +9,11 @@
 
 	$.fn.circleDiagram = function(params){
 
+		/**
+		 * Вспомогательная фукнция для поворота блоков
+		 * @param {Number} angle - угол поворота в градусах
+		 * @return {Object} object - набор css-свойств для поворота
+		 */
 		function rotate(angle) {
 			return {
 				"-webkit-transform": "rotate(" + angle + "deg)",
@@ -19,6 +24,9 @@
 			};
 		};
 
+		/**
+		 * Набор параметров для диаграмм по-умолчанию
+		*/
 		var defaults = {
 			size: "100",
 			borderWidth: "10",
@@ -29,17 +37,10 @@
 			textColor: "#000"
 		};
 
-		var $this = this;
-		var dataAttr;
-		var options;
-
-		if($this.attr("data-circle-diagram") != undefined) {
-			dataAttr = $.parseJSON($this.attr("data-circle-diagram"));
-			options = $.extend(true, {}, defaults, params, dataAttr);
-		} else {
-			options = $.extend(true, {}, defaults, params);
-		}
-
+		/**
+		 * Набор основных css-свойств для генериремых элементов.
+		 * Возможно, стоит перенести в отдельный css-файл
+		*/
 		var cssMain = {
 			"position": "relative",
 			"width": parseFloat(options.size) + "px",
@@ -60,8 +61,22 @@
 			"border-radius": "50%"
 		};
 
+		/**
+		 * Кэшируем некоторые переменные
+		*/
+		var $this = this;
+		var dataAttr;
+		var options;
+
+		if($this.attr("data-circle-diagram") != undefined) {
+			dataAttr = $.parseJSON($this.attr("data-circle-diagram"));
+			options = $.extend(true, {}, defaults, params, dataAttr);
+		} else {
+			options = $.extend(true, {}, defaults, params);
+		}
+
 		$this.css(cssMain);
-		
+
 		var text = $('<span></span>')
 			.css({
 				"display": "block",
@@ -95,6 +110,9 @@
 			})
 			.appendTo($this);
 
+		/**
+		 * Вычисляем нужный угол поворота
+		*/
 		var angle;
 		var data = parseFloat(options.percent);
 
@@ -112,6 +130,9 @@
 		bg.css(rotate(45));
 		fill.css(rotate(angle));
 
+		/**
+		 * Возвращаем $this для поддержки цепочек вызова
+		*/
 		return $this;
 	};
 
