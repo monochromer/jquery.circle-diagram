@@ -38,6 +38,20 @@
 		};
 
 		/**
+		 * Кэшируем некоторые переменные
+		*/
+		var $this = this;
+		var dataAttr;
+		var options;
+
+		if($this.attr("data-circle-diagram") != undefined) {
+			dataAttr = $.parseJSON($this.attr("data-circle-diagram"));
+			options = $.extend(true, {}, defaults, params, dataAttr);
+		} else {
+			options = $.extend(true, {}, defaults, params);
+		}
+
+		/**
 		 * Набор основных css-свойств для генериремых элементов.
 		 * Возможно, стоит перенести в отдельный css-файл
 		*/
@@ -60,20 +74,6 @@
 			"border": parseFloat(options.borderWidth) + "px" + " " + "solid",
 			"border-radius": "50%"
 		};
-
-		/**
-		 * Кэшируем некоторые переменные
-		*/
-		var $this = this;
-		var dataAttr;
-		var options;
-
-		if($this.attr("data-circle-diagram") != undefined) {
-			dataAttr = $.parseJSON($this.attr("data-circle-diagram"));
-			options = $.extend(true, {}, defaults, params, dataAttr);
-		} else {
-			options = $.extend(true, {}, defaults, params);
-		}
 
 		$this.css(cssMain);
 
