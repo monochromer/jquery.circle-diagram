@@ -26,7 +26,7 @@
 
 		/**
 		 * Набор параметров для диаграмм по-умолчанию
-		*/
+		 */
 		var defaults = {
 			size: "100",
 			borderWidth: "10",
@@ -39,7 +39,7 @@
 
 		/**
 		 * Кэшируем некоторые переменные
-		*/
+		 */
 		var $this = this;
 		var dataAttr;
 		var options;
@@ -54,7 +54,7 @@
 		/**
 		 * Набор основных css-свойств для генериремых элементов.
 		 * Возможно, стоит перенести в отдельный css-файл
-		*/
+		 */
 		var cssMain = {
 			"position": "relative",
 			"width": parseFloat(options.size) + "px",
@@ -112,7 +112,7 @@
 
 		/**
 		 * Вычисляем нужный угол поворота
-		*/
+		 */
 		var angle;
 		var data = parseFloat(options.percent);
 
@@ -132,7 +132,7 @@
 
 		/**
 		 * Возвращаем $this для поддержки цепочек вызова
-		*/
+		 */
 		return $this;
 	};
 
